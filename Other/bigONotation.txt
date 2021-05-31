@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 15:17:24 2021
+
+@author: daniel
+"""
+
+Big O Notation
+---------------
+
+-The speed and memory usage of an algorithm aren't necessarily fixed; they might change depending on the 
+input.
+-So how do we express the performance of an algorithm then?
+-Enter Big O Notation, a powerful tool that allows algorithm as a function of its input size.
+-We care about how the algorithm runs as the size of the input increases.
+Time complexity measures the change of speed of an algorithm w/ respect to the size of the input
+of a function as the input of the function increases and tends toward a value (infinity)
+L>Asymptotic analysis: the study of the behavior of a function f(n) as the value n tends towards
+infinity.
+-If you see O(n) you should think, ok, this is an asymptotic analysis of how my algorithm should run.
+-A unit that we use for time complexity is an elementary operation. A truly elementary operation
+is accessing or reading a single memory slot in memory.
+-You might have 8 elementary operations and naively think the time complexity is now O(8). But as
+n->infinity, we just say O(1) simplifying to constant time.
+
+Order of Most Efficient to Least
+----------------------------------
+O(1) #elementary operation
+O(n(log(n))) #sorting
+O(n) #linear
+O(n^2)/O(n^3) #squared, cubed respectively
+O(2^n) #exponential
+O(n!) #factorial

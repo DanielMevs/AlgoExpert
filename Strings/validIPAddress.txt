@@ -1,0 +1,124 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Valid IP Addresses
+------------------
+
+-You're given a string of length 12 or smaller, containing only digits. Write a function
+that returns all the possible IP addresses that can be created by inserting three .'s in 
+the string.
+-An IP address is a sequene of four positive integers that are separated by .'s where each
+individual integer is within the range 0-255, inclusive.
+-An IP address isn't valid if any of the individual integers contains leading 0's.
+For example, "192.168.0.1" is a valid IP address, but "192.168.00.1" and 
+"192.168.0.01" aren't, because they contain "00" and 01, respectively.
+-Another example of a valid IP address is "99.1.1.10"; conversely
+"991.1.1.0" isn't valid, because "991" is greater than 255.
+-Your function should return the IP addresses in string format and in no particular order.
+-If no valid IP addresses can be created from teh string, your function should return an empty list.
+-We'll be given a string of numbers and we'll generate all the possible IP addresses that can
+be created w/ those numbers.
+-An IP address is represented in our computer by 32 bits (32 binary bits)
+-A string can't have more than 12 digits because that implies that one of our numbers is outside
+the range of 255.
+-If you are given a string <=3, then you have an invalid IP address and we need to return []
+-If we do have a valid IP address, we need to return those as a string
+-Output can be in any arbitrary order.
+
+Sample Input
+------------
+"1921680"
+
+Sample Output
+-------------
+
+["1.9.216. 80", "1.92.16.80",
+"1.92.168.0", "19.2.16.80",
+"19.2.168.0", "19.21.6.80",
+"19.21.68.0", "19.216.8.0",
+"192.1.6.80", "192.1.68.0",
+"192.16.8.0"]
+
+Solution 1
+-----------
+
+-Try out all the valid positions of periods in the input string.
+-All we have to do is delimit this input string in all of the different possible ways that it can,
+make sure that those ways are valid.
+-As soon as we find a valid IP address, we can add that to our output array.
+"1.9.216.80" -> We put a '.' here, here and there
+-We try all of the different possible combinations of periods, we try to split the string up into
+different substrings/parts, make sure that all of those parts are balanced, if they do, export them/
+add them to our output list.
+-First we want to pick the first location for out first period.
+L>We have to find where a valid position for it is
+L>Try one and try all the possibilities after that.
+-The positions that are valid to place our first period into are the following:
+"1.921680"
+  ^
+  |
+1st pos of 1st '.'
+1st section for our
+IP address
+L>We also check if it fits within the range of 0-255 before proceeding
+-Next, we try to come up with the 2nd section of our IP address and come up w/ a valid position 
+for our next '.'
+
+"1.9.21680"
+    ^
+    |
+we put '.'
+here, gives 
+us a second
+section.
+
+-We have the rest of our string that we need to split up in 2 sections. Where should we place
+our '.'?
+
+"1.9.2.1680"
+      ^
+      |
+We put our '.' here
+
+-We see that the remaining number has a # of digits of 4 and it is outside the range 0-255.
+=>We can't put the period there so move position 
+"1.9.21.680"
+       ^
+       |
+we put our '.' here
+
+-We notice that the number after it is 3 digits long and outside the range of 0-255
+=>Move '.' to last possible position.
+"1.9.216.80"
+        ^
+        |
+ we put a '.' here
+
+-Now we have a valid IP address because we have a section taht is 216 and one section that is
+80.
+-We tried all the possible combinations w/ the last period w/ the last 2 periods fixed.
+-Now, let's shift the second to last comma up by one and see how many different combinations
+there are w/ the third '.'
+Same logic is exhausted/cycled through, w/ all of the commas, until section 1 remains valid.
+
+Time: O(1)
+L>We will have at most 2^32 possible IP addresses to check and create.
+-If you are given a string of 12 digits, it is physically impossible to generate more than 2^32 
+possible combinations.
+=>We have a constant upper bound for this solution
+=>O(2^32) -> This has no variables in it, it has no dependence on the size of the input.
+
+=>O(1)
+Each 4 sections of our IP address is represented by 8 bits.
+-8 bits (aka a byte) can represent a number between 0 and 255.
+L>We can represent 256 different #'s (including 0), w/ 8 bits.
+L>8*4 = 32 bits. 4 because that's the amount of sections that we have.
+=>256*256*256*256 = 2^32
+=> There's a finite amount of IP addresses we can create.
+
+Space: O(1)
+L>We can only create a list w/ 2^32 IP addresses in it, as an absolute upper bound. 

@@ -1,0 +1,73 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Task Assignment
+----------------
+
+You're given an integer k representing a number of workers and an array of positive integers representing durations
+of tasks that must be completed by the workers.
+-Specifically, each worker must complete two unique tasks and can only work on one task at a time.
+-The number of tasks will always be equal to 2k such that each worker always has exactly two tasks to complete.
+-All tasks are independent of one another and can be completed in any order.
+-Workers will complete their assigned tasks in parallel, and the tie takene to complete all the tasks will be
+equal to the time token to coplete the longest pair of tasks.
+-Write a function that returns the optimal assignment of tasks to each worker s.t. the tasks are completed as fast
+as possible.
+-Your function should return a list of pairs, where each pair stores the indices of the tasks that should be 
+completed by one worker.
+-The pairs should be in the following format: [task1, task2], where the order of task1 and task2 doesn't matter.
+-Your function can return the pairs in any order.
+-If multiple optimal assignments exist, any correct answer will be accepted.
+
+Sample Input
+k=3
+tasks = [1, 3, 5, 3, 1, 4]
+
+Sample Output
+[
+	[0, 2], //tasks[0] = 1, tasks[2] = 5 | 1 + 5 = 6
+	[4, 5], //tasks[4] = 1, tasks[5] = 4 | 1 + 4 = 5
+	[1, 3], //tasks[1] = 3, tasks[3] = 3 | 3 + 3 = 6
+]
+The fastest time to complete all tasks is 6.
+
+-This question is asking for the optimal assignment or the optimal pairings of tasks s.t. all tasks are
+completed by our workers as fast as possible.
+-The length of the input array is always 2k as ach worker must work on two unique tasks.
+-All k workers can be working at the same time, but each worker can only complete on task at a time.
+-So before they can move on to their second task, they must complete their first.
+-The pairs returned represent indices.
+4, 3 = 1 + 5 = |6|
+0, 5 = 1 + 4 = |5|<---The time it takes to complete all the tasks is simply equal to the largest number
+3, 1 = 3 + 3 = |6|    out of all of these pairings.
+-----                 L>That's 6, so that means the minimum amount of time to complete all of these tasks,
+[1, 3, 5, 3, 1, 4]    if each worker completes 2 tasks is going to be 6
+ 0  1  2  3  4  5
+[[4, 2], [0, 5], [3, 1]]
+
+-The slowest worker will determine how long it takes to complete all of the tasks.
+-If you were to use a brute force solution, you'd have to generate every possible pair and keep making a bunch
+of comparisons.
+L>This would lead a O(n^2) time complexity.
+
+-There is a greedy algorithm we can use to cut this problem to nlogn complexity.
+-We're going to sort the array.
+-we still have to keep track of indices of the elements, because when we generate the output, the value or the
+duration of time of each job is not being used. We're using the task_id or task_idex.
+
+See taskAssignment.jpg
+
+-We want to make the pairing be as small as possible because the worker that has to work the longest or
+has the longest set of tasks dictates how long it takes to complete all of the tasks.
+-So if we give a worker w/ task 5, any task that is not the shortest task is automatically going to lead
+to a non-optimal solution.
+-In a greedy algorithm, we make a greedy choice at every single iteration or step.
+-Now our greedy choice here is to pic the task w/ the shortest duration and the largest duration, and
+pair those together. Then, remove them from the problem etc...
+
+Space: O(n) because we need to keep track of all of the tasks and their pairings and we need to generate a new
+list that has all of these pairings inside of it since we are going to use all of our tasks.

@@ -1,0 +1,73 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Reverse Words In String
+------------------------
+
+-Write a function that takes in a string of words separated by one or more whitespaces and returns
+a string that has these words in reverse order.
+-For example, given the string "time is great", your function should return "great is tim".
+-For this problem, a word can contain special characters, punction, and numbers.
+-The words in the string will be separated by one or more whitespaces, and the reversed string must
+contain thse same whitespaces as teh original string.
+-For example, give the string "whitespaces    4" you would be expected to return "4    whitespaces";
+-Note that you're not allowed to use any built-in split or reverse methods/functions. 
+-However, you are allowed to use a built-in join method/function.
+-Also note that the input string isn't guarenteed to always contain words. 
+
+   0        1   2   3
+"AlgoExpert is the best!"
+"....." -> 5 whitespaces/return same string.
+".....a" -> "a....." -> a and whitespaces
+".....a..b." -> ".b..a....."
+"".join(["1", "2", "3"]) -> "1 2 3"
+
+Solution 1
+-----------
+
+Pick out all of the words from this string. We need to find what all of these words are, and then we 
+just need to reverse them and join them with a string. 
+
+-To keep track of the spaces, this algorithm will also keep track of white spaces.
+
+Input
+-----
+"AlgoExpert is the best!"
+
+["AlgoExert", " ", "is", " ", "the", " ", "best"]
+Reverse this, considering the spaces and make it a string.
+-We'll start by creating some list/array that's going to be able to store all of the words that are in
+our string.
+words = []
+startOfWord
+L>We'll start at the start of our word and keep iterating through the word until we hit a white-space,
+and we add that word into our word array.
+-If element at current index is not a space, keep iterating 
+-Change the startOfWord equal to the new pos.
+-We check to see it the next element is a space.
+L>If it is not a space, add the space, change the start of word
+
+Time: O(n)
+Space: O(n)
+
+Solution 2
+-----------
+-We're going to start by reversing the entire string(all words are also going to be revered).
+-Then reverse each word, one by one (don't do anything w/ spaces).
+-We are also going ot define a start of word variable
+-We are going to define an end of word variable
+L>Once you read a word, keep incrementing your end of word variable until you reach a white space.
+-Once we find our space, we are going to reverse our string 
+-Reverse all charachters between start of word and end of word but not including end of word.
+-Start of word will be equal to end of word
+Ignore the spaces.
+
+-"....." -> keep incrementing until letter is not a space, all the way to the end.
+=>while the end of word is not a space.
+
+Time: O(n) -> we need to loop through all the chars in our string
+Space: O(n)

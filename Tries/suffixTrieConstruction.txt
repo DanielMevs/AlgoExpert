@@ -1,0 +1,49 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Suffix Trie Construction
+------------------------
+
+-Write a SuffixTrie class for a suffix-trie-like data structure.
+-The class should have a root property to set to be the root node of the trie and should support:
+*Creating the trie from a string, this will be done by calling the populateSuffixTrieFrom method
+upon class instantiation, which should populate the root of the class.
+*Searching for strings in the trie.
+-Note that every string added to the trie should end with the special endSymbol character "*".
+
+Sample Input
+------------
+string= "babc"
+
+Sample Output (for creation)
+-------------
+//the structure below is the root of the trie.
+{
+	"c" : {"*": true},
+	"b" : {
+		"c": {"*" : true},
+		"a": {"b" : {"c" : {"*" : true}}},
+	},
+	"a": {"b": {"c": {"*": true}}},
+}
+
+see suffixTrieConstruction.jpg
+
+Make the end of a suffix in the trie w/ an asterisk
+-Search function tells us whether or not a string is contained in the suffix trie.
+
+-Every node in a suffix trie is going to be a key in a hash table point to another hash table.
+-All of the values in the hash-table to which it points will be other nodes in the trie, whose
+keys will be other nodes in the trie, whose keys will be a specific letter that comes after the 
+previous letter and that points to another hash table and so on,
+Searching
+L>O(M) time : M = len(string)
+L>Space: O(1)
+-Creation:
+Time: O(n^2) -> iterating through all suffixes + their chars
+Space: O(n^2)
+

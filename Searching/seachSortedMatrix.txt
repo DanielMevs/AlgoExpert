@@ -1,0 +1,50 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Search In Sorted Matrix
+------------------------
+
+-You're given a two-dimensional array (a matrix) of distinct integers and a target integer.
+-Each row in the matrix is sorted, and each column is also sorted; the matrix doesn't necessarily
+have the same height and width.
+-Write a function that returns an array of the row and column indices of the target integer if it's
+contained in the matrix, otherwise [-1, -1]
+
+Sample Input
+-------------
+matrix = [
+	[1,4, 7, 12, 15, 1000],
+	[2, 5, 19, 31, 32, 1001],
+	[3, 8, 24, 33, 35, 1002],
+	[40, 41, 42, 44, 45, 1003],
+	[99, 100, 103, 106, 128, 1004]
+]
+
+target = 44
+
+Sample Output
+-------------
+[3, 3]
+
+-If we were to iterate through the matrix, row by row, column by column, we would ahve a O(n* m)
+time complexity: n = # of rows; m = # of columns.
+
+-We should take advantage of the fact that the matrix is sorted.
+
+-If the number we're looking at is less than the target, we can eliminate the entire column
+below that number, including that number => move current horizontally
+-If the "   " is greater than the target, we can eliminate the row prior to the current number,
+including that number. => move current vertically.
+
+See searchSortedMatrix.jpg
+
+-We start at the top right corner,
+-Because we know the matrix is sorted, whenever we compare a number to the target number, if the number
+is bigger than our target, we eliminate every number below it and disregard numbers to the right.
+-If our number is smaller than our current number, then we eliminate all the numbers to the left of it.
+-So practically, we'll be going down and left until we reach our number.
+

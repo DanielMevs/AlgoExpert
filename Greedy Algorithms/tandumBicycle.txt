@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Tandem Bicycle
+--------------
+
+A tandem bicycle is a bicycle that's operated by two people: person A and 
+person B. Both people pedal the bicycle, but the person taht pedals faster
+dictates the speed of the bicycle. So if person A pedals at speed of 5, and
+person B pedals at a speed of 4, the tandem bicycle moves at a speed of 5
+(i.e. tandemSpeed = max(speedA, speedB))
+-You're given two lists of positive intergs: one that contains the speeds
+of riders wearing blue shirts.
+-Each rider is represented by a single positive integer, which is the speed that
+they pedal a tadem bicycle at.
+-Both lists have the same length, meaning that there are as many red-shirt riders as 
+there are blue-shirt riders.
+-Your goal is to pair every rider wearing a red shirt w/ a rider wearing a blue shirt to operate
+a tandem bicycle.
+-Write a function that returns the maximum possible total speed or minimum possible total speed 
+of all of the tandem bicycles being ridden based on an input parameter, fastest.
+If fastest = true, your function should return the maximum possible speeds;
+otherwise it should return the minimum total speed.
+-"Total speed" is defined as the sum of the speeds of all the tandem bicycles being ridden.
+For example, if there a 4 riders (2 red-shirt riders and 2 blue-shirt riders) who have speeds of
+1,3,4,5 and if they're paired on tandem bicycles as follows: [1, 4], [5, 3], then the total speed
+of these is 9.
+
+redShirtSpeeds = [5, 5, 3, 9, 2]
+blueShirtSpeeds = ]3, 6, 7, 2, 1]
+fastest = true
+
+-We're going to generate pairing of either min or max speeds depending on the return value of
+the fastest. 
+-If fastest==true, that means we're looking for the maximum total speed. Else, min tot. speed.
+-Total speed = sum of all tandum bicycles being ridden
+*-First step: walk through sample input.
+
+-From the redShirtSpeed array, let's pick 9 as it is the maximum value
+L>It doesn't matter waht rider I pick from the blueShirtSpeeds array, the tandem speed will always
+be 9.
+-Therefore, it doesn't make sense to pair 9 w/ say 7
+as 7 is the largest ride in the blueShirtSpees.
+-We could strategically pair the 7 w/ the min value of the RedShirtsSpeeds
+-We could do the same for blueShirts.
+L>This is to find the maximum.
+L>We take the greatest value from one array and pair it with the minimum value
+of the second array. 
+-We do this if fastest is equal to true.
+
+-If fastest is False, we use the reverse strategy.
+-We pair the greatest values from both arrays first.
+
+-We're going to use a greedy algorithm 
+-A greedy algorithm means you make a greedy choice at every single step or every singe iteration.
+-Typcially greedy algorithms involve sorting the inpput.
+L>Sort the input to see if that helps you out 
+-What we want to do is we want to pir the maximum value w/ the minimum value or the maximum value
+ w/ the other maximum value.
+ -So in order to find those values in constant time and not have to loop through those arrays 
+ every single time to find the max or find the minimum, it would make sense to actually sort
+ these in ascending or descending order.
+
+ See tandemBicycle.jpg
+
+ -You can now look at the end to find the largest, or look at the begining and find the lowest
+ value.
+ -So let's say we have an iterator at i and j. i is at the start and j is at the end of the array.
+ -If fastest is false, we will reverse either the 1st or 2nd list.
+
+ Time: O(nlogn) 
+ We are sorting arrays. Then we need to determine if we're generating the fastest or slowest 
+ speeds. If it is the slowest, we need to reverse one of these lists which takes an additional
+ O(n).
+ -We also need to loop through these arrays at the exact same time, we need to pair these elements 
+ together and calculate what the speed is. 
+ When we loop through these arrays together, that is going to take an additional O(n)
+  O(nlogn)
++ O(n)
++ O(n)
+-----------
+O(n + n _+ nlogn) when we have this, we look at the largest term
+=>n(1 + 1 _+ logn) -> you can remove constants
+=> nlogn 
+
+Space: O(n) or O(1) depending on implementation
+When we would get O(n) is when we would decide to sort both of these arrays into a new array or list.
+Rather than sorting in place, we create a new structure.
+This is really 2n, but 2 is a constant so it's just O(n).
+-If we decide to sort these in place, then we're going to get constant space O(1)
+-We use a greedy algorithm by sorting each array and using the properties of the sorted array to 
+generate a max or min speed.

@@ -1,0 +1,81 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Sort Stack
+-----------
+
+-Write a function that takes in an array of integers representing a stack, recursively sorts the stack
+in place (i.e. doesn't create a brand new array), and returns it.
+-The array must be treated as a stack, w/ the end of the array as the top of the stack.
+Therefore, you're only allowed to:
+.Pop elements from the top of the stack by removing
+ elemnents from teh end of the array using the built-in .pop() method
+ in your programming lanuage of choice
+.Push elements to the top of the stack by appending elements to the end of the array using the 
+ built-in .append() method in your programming language of choice.
+.Peek at the element on top of the stack by accessing the last element in the array.
+
+-You're not allowed to perform any other operations on the input array, including accessing elements 
+(except for the last element), moving elements, etc...
+You're also not allowed to use any other data structures, and your solution must be recursive
+
+Sample Input
+
+stack = [-5, 2, -2, 4, 3, 1]
+
+Sample Output
+
+[-5, -2, 1, 2, 3, 4]
+
+See sortStack1.jpg
+
+-First we pop 1 from the stack
+L>We will not know if 1 is in the correct position until we look through every element in the stack.
+-Once we pop off all the elements from the stack, we look at all of these elements, which perhaps is
+stored in some type of recursive call stack, and try to insert them back into the stack in the correct
+order.
+
+-We should pop an element from the stack, sort the remainder of the stack and then insert this element
+into its correct position.
+-This is recursive => once you pop the top element, you will repeat the process
+L>Pop 3, we'll sort the remainder of the stack and insert 3 in its correct position
+L>Pop 4, we'll sort teh remainder of the stack adn insert 4 in its correct position.
+L>Pop 2, we'll sort teh remainder of the stack and insert 2 in its correct position.
+L>Pop 5, "   "   "  "  "  "    
+
+-Once we pop off element 5, we know that we have no more elements in the stack
+=>the rest of the stack is actually sorted
+-So now we take element 5, and try to insert it in its correct position.
+-Then we go to eleent 2 and we want to insert this in its correct position.
+*So what we do is we look to see if the current element is greater than the element
+at the top of the stack.
+-In the case of 2, it is greater  than the element -5, so we add element 2 on the top
+of the stack.
+-Now we're at -2 and we want to insert this element in its correct position
+L>So we check if the element at the top of the stack is greater than or less thaan the current 
+element, -2.
+-The current element is less than the element on the top of the stack, so we put -2 below the top
+element
+L>Since we can only pop and push elements on a stack, we have to remove the top element first and 
+then push back our top element in insert the current element below the top element if the stack 
+has no more elements in teh stack that are greater than our current element
+L>If there are, repeat the process
+Time: O(n^2)
+
+Let's write out the recursive calls so we can see how to recurse and what a recursive call 
+stack actaullly looks like
+
+We use 2 functions
+sort()
+insert() -> find the correct place for the element in the stack. Only works if the stack's sorted.
+
+-sort(stack)
+-Base case, if the stack is empty, return an empty stack.
+-If we don't have an empty stack, we pop off an element from this stack.
+-We assign a variable top (top of the stack) to be equal this popped off element.
+
+See sortStack2.jpg

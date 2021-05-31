@@ -1,0 +1,54 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Group Anagrams
+--------------
+
+-Write a function that takes in an array of strings and groups anagrams together.
+-Anagrams are strings made up of exactly the same letters, where order doesn't matter.
+-For example, "cinema" and "iceman" are anagrams; similarly, "foo" and "ofo" are 
+anagrams.
+-Your function should return a list of anagram groups in no particular order.
+
+Sampe Input
+words = ["yo", "act", "flop", "tac", "foo", "cat", "ox", "olfp"]
+
+Sample Output
+[["yo", "oy"], ["flop", "olfp"], ["act", "tac", "cat"], ["foo"]]
+
+Grouping Anagrams
+-The more optimal solution is actually the more intuitive solution.
+
+-anagram: words that consist of the same letters (just in a different combination).
+
+Solution 1
+-----------
+
+0    1    2     3    4   5    6
+yo, act, flop, tac, cat, oy, olfp
+
+oy, act, flop, act, act, oy, flop -> sort anagram
+
+act, act, act, flop, flop, oy, oy -> bucket every anagram
+
+1     3    4    2     6    0   5  -> fill array w/ index/ anagram
+
+We have the ability w/ the above indices not only to access the anagram in 
+question, but we have access to the original word that gave way to that anagram.
+
+Space: O(w*n) : w = # of words given; n = len(longest_word)
+
+Array of indices -> len(w)
+wn
+-Time complexity: O(wn(log(n)) + nw(log(w)))
+
+Solution 2
+-----------
+
+-Once we have sorted every word (i.e. we sort each letter of each word in alphabetical
+order), we can just dump them in a hash table, and super easily have all the anagrams 
+bucketed together.

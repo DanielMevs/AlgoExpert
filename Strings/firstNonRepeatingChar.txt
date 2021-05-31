@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+First Non-Repeating Character
+------------------------------
+-Write a function that takes in a string of lowercase English-alphabet letters and returns
+a string of lowercase English-alphabet letters and returns the index of the string's first
+non-repeating character.
+-The first non-repeating character is the first character in a string that occurs only once.
+-If the input string doesn't have any non-repeating characters, your function should return 
+-1
+string = "abcdcaf"
+1 // the first non-repeating character is "b" and is found at index 1
+If there are only repeating letters, return -1
+ex: 22233444
+
+-In an O(n^2) implementation we have an inner loop looking for duplicates at the current index
+and if it finds one, have a boolean variable equal to true and false other wise. O(1) space.
+
+"coolcode"
+foundDuplicate = False
+
+-If we iterate through our entire inner loop and if our boolean is still False, we can return that index
+-If True, we set it back equal to False and go through our inner loop again.
+-This is a bit slow (O(N^2)). To improve the time, let's see if we can make use of a data structure.
+-Hash maps are good to keep track of frequencies.
+-The key would be the character value and the value would be the frequency.
+-So we traverse our string character by character and build our hash map.
+L>If a character is not in the hash map add it
+L>If it is update the count
+-Once we have constructed our hash map, we iterate through it and return the character that occurs
+once.
+time: O(n), space= O(1)

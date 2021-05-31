@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+River Sizes
+------------
+-You're given a two-dimensional array (a matrix) of potentially unequal height and width containing
+only 0 and 1s.
+Each 0 represents land, and each 1 represents part of a river.
+-A river consists of any number of 1s that are either horizontally or vertically adjacent (but not
+diagonally).
+-The number of adjacent 1s forming a river determines its size.
+-Note that a river can twist. I.e. it doesn't have to be a straight, vertical or horizontal line.
+L>it can be L-shaped, for example.
+
+matrix = [
+	[1, 0, 0, 1, 0],
+	[1, 0, 1, 0, 0],
+	[0, 0, 1, 0, 1],
+	[0, 0, 1, 0, 1],
+	[1, 0, 1, 1, 0]
+]
+
+-Naive approach -> traverse row by row, column by column.
+-You need to be able to distinguish one group of 1's from another.
+L>Treat this as a graph traversal problem.
+L>You can treat every element in this matrix as a node in the graph.
+
+-You traverse the graph and if you see a 1, you know it's part of a river, you can then
+start applying breadthFirst search/depth-first search
+-You look at its neighboring nodes, and if those nodes are 1, you apply BFS or DFS to all
+of that node's neighboring nodes.
+-How do you algorithmically know when traversing nodes (looking upside-down) that a node
+was already visited?
+-You can have a variable keeping trach of the number of nodes you have visited.
+-The tricky part of this algorithm is that you'll explore multiple times if you're not careful.
+-We'll be stroing in come kind of auxiliary matrix that holds a true or false value (boolean)
+for where a specific column and row has been visited.
+L>This auxiliary matrix will be the same size as the original array.
+-Once we've found a 1 or a collection of 1's, we update the size and add it to some final array
+of solutions if it doesn't have 1 for neighbors.
+
+Time: O(W*H)
+L>We're visiting each node once 
+L>we may peek at it when exploring other nodes but we skip it immediately O(1)
+
+Space: O(W*H)
+L>Because we're going to be building this auxiliary data structure (matrix of same size)
+where we hold Booleans. The array we're storing lengths never gets bigger than the original.

@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Powerset
+---------
+-Write a function that takes in an array of unique integers and returns its powerset.
+-The powerset P(X) of a set X is the set of all subsets of x. For example, the powerset
+of [1, 2] is [[], [1], [2], [1, 2]]
+-Note that the sets in teh powerset do not need to be in any particular order
+
+Sample Input
+array = [1, 2, 3]
+
+Sample Output
+[[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]
+Powerset = set of all subset of a possible set.
+
+-2 Ways to solve this problem: iterative and recursive.
+
+-You can initialize a subset array w/ the empty set []
+*- Iterate through the numbers, at each number, iterate throgh all the subsets, and 
+create a new subset w/ that number.
+
+See powerSet.jpg
+
+-At the end we end up w/ 2^n subsets. Through every loop, we double the # of subsets.
+Time = O((2^n)*n)
+-2^n because we end up w/ 2^n subsets
+-n/2 -> average length of new subset appended 
+L>converges to n
+Space = O((2^n)*n)
+-We are storing 2^n subsets
+-and each of these subsets contain on average n/2 elements, which converges to n.

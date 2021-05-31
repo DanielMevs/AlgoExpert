@@ -1,0 +1,68 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Breadth-first Search
+---------------------
+-You're given a Node class that has a name and an array of optional children nodes.
+-When put together, nodes form an acyclic tree-lie structure.
+-Implement the breadthFirstSearch method on the Node class, which takes in an empty array,
+traverse the tree using the breadth-first search approach (specifically navigating the tree
+from left to right), stores all of the nodes' names in the input array, and returns it.
+Sample
+
+graph =             A          
+				  / | \
+                 B  C  D
+                / \   / \     -> ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K']
+               E   F G   H
+                  / \ \
+                 I   J K
+
+-You are traversing a graph, a sort of tree-like data structure.
+-Consists of nodes, each node has a name (letter), and each node might have children nodes.
+-The way breadth first search works is we want to search the graph level by level.
+-We start at the top level, the root level which is A in the example.
+-We go to the second level, B, C, D, we've traversed it completely
+-We move on to the 3rd level E, F, and H.
+-Finally we go to the 4th level and we traverse it entirely, I, J, and K.
+-Opposed to depth-first search, where we would traverse branch-by-branch.
+-When tasked to implement this in code, it becomes harder.
+-Do we have to keep track of nodes?
+
+-The way we can make this easy to solve is by using an additional data structure
+called a queue.
+-A queue is a data structure that follows first in first out, e.g. anything that we 
+put in the queue is going to be the first thing to come out of it.
+-We're going to declare a variable called current
+-We're probably going to be using a while loop and we're going to say while the
+queue is not empty (while we have nodes in the queue), we're going to pop a node from
+the queue in a first in, first out fashion, and we're going to make that node the current
+node.
+
+Queue - [A   ] -> pop A-> make current node. Add A to final array, add all of A's child nodes
+				to the queue.
+Queue - [B C D] -> pop B -> make curent node. Add B to final array. Add all of B's child
+					nodes to the queue.
+Queue - [C D E F] -> pop C -> make current node. Add C to final array, we don't have any
+								children nodes here, we're done.
+Queue - [D E F] -> pop D -> make current node. Add to final array. Grab its two chidren nodes
+							G & H, add them to the queue
+Queue - [E F G H] -> pop E -> make current node. Add to final array. Done.
+Queue - [F G H] -> pop F; make current node. Add to final array. Add I, J to queue
+Queue - [G H I J] -> pop G; make current; add to final array; add k to queue
+Queue - [H I J K] -> pop H; make current, add to final array. Done
+Queue - [I J K] ...
+
+-In analyzing time-space complexity, we're going to be dealing with two variables.
+-In a graph, you've got what's called vertices and edges.
+-Vertices are nodes, edges are the things that connnect these nodes.
+-The time complexity for this algorithm is actually going to be O(V+E)
+where V = # of noes, E = # of edges connecting these nodes.
+-V because we add every node, E because for each node, we're adding it's children.
+-Space complexity is going to be O(V) because we're storing an array of V node names.
+Also, in the queue we're going to be holding at worst case V-1 nodes (if we had just
+one node w/ many chlidren).

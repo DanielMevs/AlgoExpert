@@ -1,0 +1,120 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Remove Islands
+----------------
+
+You're given a two-dimensional array (a matrix) of potentially unequal height and width
+containing only 0s and 1s.
+-The matrix represents a two-toned image, where each 1 represents black and each 0 represents
+white.
+-An island is defined as any number of 1's that are horizontally or vertically adjacent (but
+not diagonally adjacent) and that don't touch the border of the image.
+-In other words, a group of horizontally or vertically adjacent 1's isn't an island if any of those
+1s are in the first row, last row, first column, or last column of the input matrix.
+-Note that an island can twist. In other words, it doesn't have to be a straight vertical line
+or a straight horizontal line: it can be L-shaped, for example.
+-You can think of islands as patches of black that don't touch the border of the two-toned image.
+-Write a function that returns a modified version of the input matrix, where all of the islands 
+are removed.
+-You remove an island by replacing it with 0s.
+-Naturally, you're allowed to mutate the input matrix.
+
+Sample Input
+matrix =
+[
+	[1, 0, 0, 0, 0, 0],
+	[0, 1, 0, 1, 1, 1],
+	[0, 0, 1, 0, 1, 0],
+	[1, 1, 0, 0, 1, 0],
+	[1, 0, 1, 1, 0, 0],
+	[1, 0, 0, 0, 0, 1]
+]
+
+Sample Out
+matrix = 
+[
+	[1, 0, 0, 0, 0, 0],
+	[0, 0, 0, 1, 1, 1],
+	[0, 0, 0, 0, 1, 0],
+	[1, 1, 0, 0, 1, 0],
+	[1, 0, 0, 0, 0, 0],
+	[1, 0, 0, 0, 0, 1]
+]
+
+Brute Force / Trivial Way to Solve the Problem
+-----------------------------------------------
+
+-Go through the matrix row by row.
+-Check if it is a one. If it is, compare it's vertical and horizontal neighbors for 1s.
+-If the piece is on the border, we do not replace it. 
+-Else, if it's adjacent to or connected to by some series of 1s that are borders.
+-However, because we don't keep track of an auxiliary matrix, we will be repeating 
+operations.
+
+First Solution
+----------------
+
+-The first solution takes advantage of the property that any clusters of 1 are only an island
+if they are not connected to the border.
+=>We can find all of the 1's that are connected to the border by simply looking at all ones already
+on the border.
+L>We can start looping through the first row, the first column, the last row, and the last column
+and find all of the 1's that are connected to ones that we find on this border.
+L>All that we need to do is find all of the otehr 1's that are connected to the border 1's.
+
+see removeIslands.jpg
+
+-We store all of the positions of these 1's.
+-Then, we loop through the interior square, and replace any 1's that are not connected to the 
+border.
+-We can initialize an auxiliary matrix of equal size containing all boolean values initialized
+to all False at first, then replace the False w/ True at any position where there are 1's 
+connected to the border.
+-Then loop through the interior array and replace any 1's that are False by 0's.
+
+-We start by creating an auxiliary data structure that could tell us which positions were 
+connected to the border.
+-This auxiliary data structure was filled completely w/ Falses and it was the exact same
+height and width as our original input matrix.
+-Then, we loop through all of our borders of our original input matrix and found all of 
+the ones that were connected to this border.
+L>We did this by performing a depth-first search on all of the 1's that were connected to
+the border.
+-This depth first search looked for any horizontally or vertically adjacent 1's that we had
+not already marked as connected to the border.
+-If we had already marked them as connected to the border, we could simply skip them
+L>we mark all of these 1's as true that were connected to the border.
+
+Time: O(W*H) -> we could at most be looking at every single position in this input matrix
+Space: O(W*H) -> we have to create an auxiliary matrix data-structure.
+
+Second Solution
+-----------------
+
+-Almost identical to the first solution except it avoids having to create this data structure
+filled w/ true and false values.
+-What we do instead is we represent ones that we already found that are connected to the 
+border with the value 2.
+-Rather than creating another auxiliary data structure, we can replace all of the one's
+that we find in the original input matrix that are connected to the border w/ the value
+2.
+L>So instead of iterating through the interior matrix, we iterate through the entire matrix
+and replace all instances of 2's as 1's and all 1's as 0's.
+
+O(w*h) time
+O(w*h) space
+L>We are still using space w/ depth first search
+-When we perform depth first search, we use a stack
+L>If our matrix is just filled w/ 1's, the entire matrix
+would be held in that stack.
+L>Still a much better space complexity on average that the first solution.
+L>We probably are not considering every position in the input matrix at one
+depth first search step.
+
+-In the previous solution our space commplexity will always be O(w*h) because of the 
+auxiliary matrix. 

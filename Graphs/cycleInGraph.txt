@@ -1,0 +1,125 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+Cycle In Graph
+---------------
+-You're given a list of edges representing an unweighted, directed graph w/ at least node. Write
+a function that returns a boolean representing whether the given graph contains a cycle.
+-For the purpose of this question, a cycle is defined as any number of vertices, including just one
+vertex, that are connected in a closed chain.
+-A cycle can also be defined as a chain, of at least one vertex in which the first vertex is the same as
+the last.
+-The given list is what's called an adjacency list, and it represents a graph.
+L>the number of vertices in the graph is equal to the length of edges, where each index i in edges
+contains vertex i in edges contains vertex i's outbound edges, in no particular order.
+-Each individual edge is represented by a positive integer that denotes an index (a destination vertex)
+in the list that this vertex is connected to.
+-Note that these edges are directed, meaning that you can only travel from a particular vertex to its 
+destination, not the other way around(unless the destination vertex itself has an outbound edge to the
+original vertex).
+
+Sample Input
+edges = [
+	[1, 3],
+	[2, 3, 4],
+	[0],
+	[],
+	[2, 5],
+	[],
+]
+
+Sample Output
+true
+
+-We're given a graph in the form of an adjacency list
+-The graph that we're given is going to be directed and unweighted (djikstra's not applicable)
+-All of the edges that connect to vertices or connect to nodes, can only travel along this edge in 
+one direction.
+-It is possible to have multiple cycles in a graph 
+Cycle: a closed chain of vertices that are connected together.
+
+See cycleInGraph.jpg
+
+How the Adjacency List Represents the Graph
+--------------------------------------------
+
+See cycleInGraph2.jpg
+
+The adjacency list and the graph are one in the same.
+You can construct a graph from an adjacency list.
+
+-An adjacency list represents the outgoing or outbound edges
+from a specific vertex.
+
+-At index 0, you have your first vertex, so vertex 0.
+It says we have two outbound edges.
+L>The first out bound edges goes from vertex zero to vertex
+one, the second goes from vertex zero to vertex 3.
+
+-Start by traversing the graph (using BFS or DFS) to start
+getting an idea how to solve this problem.
+L>Here we use DFS
+-So in the example above, we start at vertex 0, mark it as 
+visited, and explore its edges.
+L>We go to vertex 1, mark that as visited.
+L>A tree edge is when you discover a node not already in 
+the tree. 
+-One is a descendant of vertex zero
+-Zero is the ancestor of one
+L>So in a depth first search manner, we go to 1 and look at
+its edges.
+
+See cycleInGraph3.jpg
+
+-Now we are at vertex 2 and we consider its edges. It goes back
+to zero.
+-This type of edge is known as a back edge.
+-The reason this is known as a back edge is because we've
+already looked at vertex zero.
+-Vertex zero is an ancestor of vertex two.
+-Now vertex two is connected to its ancestor.
+-So you have a descendant connected to its ancestor through
+a new edge, that's why it's called a back edge.
+L>This signifies to us that there is a cycle in this graph.
+-Whenever we can traverse an edge from a descendant to one
+of its ancestors, that tells us there must be a cycle.
+-That's what we're looking for in our solution, is the 
+presence of any back edges.
+-Then we go back to 1 and consider node 3, which has no nodes
+to consider so we go back to 1.
+-Then we consider node 4. We consider vertex 2.
+This is known as a cross edge because it does not connect an
+ancestor and its descendant, it does not discover a new node, 
+but what it actually does is it connects two nodes in the tree 
+that are in separate sub trees.
+-From 4 we go to 5. Then we go back to 0 and go to 3.
+-This is known as a foward edge (ancestor to visited descendant).
+
+If we're able to find that a descendant is connected to its ancestor,
+then we know we found a cycle, we can return true, and we're done.
+
+-So how are we going to detect all of the back edges?
+L> To do this, we initialize two auxiliary data structures
+-The first data structure is going to be called visited.
+Visited will tell use whether each of the nodes in our graph
+has been visited.
+-Then we're going to make another data structure and this is going
+to be called inStack.
+-We're going to traverse this graph recursively using depth first
+search.
+-The reason we nned to keep track of which nodes are in the recursion
+stack is because if a node is currently in the stack and we reach it
+from a different node that tells us that we must have a cycle.
+-We can initialize visited w/ 0's.
+-InStack "   "
+-Instack tells us which nodes are ancestor nodes.
+-If an edge points to one of these, we've found a back edge
+(and we have found a cycle).
+
+See cycleInGraph4.jpg
+
+Time: O(v + e) : v = # of vertices, e = # of edges
+Space: O(v) 

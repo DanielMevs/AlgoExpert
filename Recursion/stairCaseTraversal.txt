@@ -1,0 +1,179 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 15:17:24 2021
+
+@author: daniel
+"""
+
+Staircase Traversal
+--------------------
+You're given two positive integers representing the height of a staircase and the 
+maximum number of steps that you can advance up the staircase at a time. Write a function
+that returns the number of ways in which you can climb the staircase.
+For example, if you were given a staircase of height = 3 adn maxSteps = 2 you could climb the
+staircase in 3 ways. You could take 1 step, 1 step, then 1 step, could also take 1 step, then
+2 steps, and you could take 2 steps, then 1 step.
+Note that maxSteps <= height will always be true.
+
+Sample Input          
+-------------
+height = 4
+maxSteps = 2
+        _  
+      _|4
+    _|3
+  _|2
+_|1
+0
+
+Sample Output
+--------------
+5
+you can climb the staircase in the foloowing ways:
+1,1,1,1
+//1,1,2
+//2,1,1
+//2,2
+
+Solution 1
+-----------
+L>Worst one (recursive)
+
+if h==0 or h==1:
+	return 1
+else:
+	return rec(h-1) + rec(h-2) + ... + rec(h-s) # s = max step
+
+      |					rec(4)
+height|					/3    \ 2=5
+of    | 			rec(3) +  rec(2)
+tree  |            /     \      /   \
+= n   |         rec(2) rec(1) rec(1) rec(0)
+      V            /\    ||     ||     ||
+             rec(1)rec(0) 1      1      1
+              ||    ||
+               1     1
+
+time = O(K^n) time (horrible)
+
+-The # of calls we can have from on recursive call is k.
+space = O(n). The number of recursive calls on the stack
+will not exceeddd n because n is the depth or the height of our
+tree.
+-Not an efficient solution as we repeat the same call multiple time
+e.g. (rec(2), rec(1), etc...).
+-We do not need to be performing the same operations if we already know
+the answer to rec(0), etc...
+
+Solution 2: Memoization
+------------------------
+-What we can do is something called memoization.
+-Allows you to store the answer to your recursive calls.
+-After you call rec(1), you're going to store it in a data structure
+that rec(1) is equal to
+-Store in a dictionary so you don't have to repeat recursive calls.
+-Have dictionary take care of base case initially.
+{0:1, 1:1}                                         Time
+L>2:2                                              O(k*n)
+L>3:3                    rec(4) = <5>             L> For each one of our
+						3/     \2					 heights, we need to
+					rec(3)     rec(2)                sum at most k other
+					/2  \1                           elements together
+				rec(2) rec(1)                        n=# of recursive calls,
+				/1  \1                               for each of these recursive
+			rec(1)  rec(0)                           calls, we are going to sum
+													 k elements together.
+Space: O(n):
+-We have this auxiliary data-structure that's keeping track of all our answers.
+
+Solution 3
+-----------
+-Like solution 2, but done iteratively.
+-Rule of thumb: if you can do something recursively then you can probably do it
+iteratively.
+L>might be easier to debug.
+L>Don't have to deal w/ extra space on the recursive stack.
+
+-We can use dynamic programming to solve this problem w/out using any recursive calls.
+-We're going to initialize a data structure that stores the answers that we've currently
+come up with
+L>An array -> fill up w/ zeros (# of zero's = height + 1)
+L>The element at each               L>Reason it is +1 is to handle
+ index represents the                 base case of 0
+ number of ways to get
+ to a staircase of this
+ height.
+
+ [1, 1, 2, 3, 5]
+  0  1  2  3  4
+  ^  ^  |  |  |
+  |  |  |  |  |
+  -------  |  |
+     ^  ^  |  |
+     |  |  |  |
+     -------  |
+        ^  ^  |
+        |  |  |
+        -------
+
+Time: O(k*n)
+L>For each of our heights we're summing k values
+-This solution ahs overlapping in the values we add
+which causes repeating operations.
+-In this iteration, with every incriment of index, we
+are subtracting one number and adding one number.
+
+
+Solution 4: Sliding Window
+--------------------------
+height = 5
+maxStep = 2 = k
+
+-[1]   1 2 3 4 5
+cur = 1^
+
+-[1 1] 1 2 3 4 5
+cur=1+1=2^
+-[1 1 ( 2 - 1 + 1)]  -> [1 1 2]
+  ^ ^       |   |
+  | |       |   |
+  | --------|---- 
+  |         |
+  -----------
+-[1 1  2  2-1 + 2)]  -> [1 1 2 3]
+    ^  ^    |   |   
+    |  |    |   |
+    ---|-----   |
+       |        |
+       ----------
+
+cur = 3
+-[1, 1, 2, 3, 4 - 2 + 3 ] -> [1, 1, 2, 3, 5]
+        ^  ^  ^   |   |
+        |  |  |   |   |
+        ---|--|----   |
+           ---|--------
+cur = 4    <---
+
+-[1, 1, 2, 3, 5, 5 - 3 + 5 ] -> [1, 1, 2, 3, 5, 7]
+           ^  ^  ^   |   |
+           |  |  |   |   |
+           ---|--|----   |
+              ---|--------
+cur = 5      <----
+
+cur = max height => return [...][-1]
+
+-Once our window of length k has been formed, you shift to the right
+one value, and add current w/ the new element now in our window and
+subtract it by the element that is no longer in our window due to the shift.
+
+Time: O(n)
+We have to do a constant amount of work for each of our heights
+
+Space: O(n)
+Array
+
+
+
+       

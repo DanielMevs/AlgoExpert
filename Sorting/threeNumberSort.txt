@@ -1,0 +1,106 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Three Number Sort
+------------------
+
+-You're given an array of integers and another array of three distinct integers.
+-The fist array is guarenteed to only contain integers that are in the second array, and the
+second array represents a desired order for the integers sin the first array.
+-For example, a second array of [x, y, z] represents a desired order of 
+[x, x, ..., x, y, y, ...,y, z, z, ...,z] in the first array.
+-Write a function that sorts the first array according to the desired order in the second array.
+-The function should perform this in place (i.e., it should mutate the input array), and it 
+shouldn't use any auxiliary space (i.e., it should run w/ constant space: O(1) space).
+-Note that the desired order won't necessarily be ascending or descending and that the first array won't 
+necessarily contain all three integers found in the second array - it might only contain one or two.
+
+Sample Input
+
+array = [1, 0, 0, -1, -1, 0, 1, 1]
+order = [0, 1, -1]
+
+Sample Output
+
+[0, 0, 0, 1, 1, 1, -1, -1]
+
+-We know that we have at most 3 unique numbers in our input array => we can sort in linear time
+L>Because we can use bucket sort
+
+Bucket Sort
+------------
+
+-We can create 3 buckets
+L>A bucket for each of the elements that could be in our array.
+-We'l label them zero, one, and -1.
+
+\___/  \___/ \___/      [1, 0, 0, -1, -1, 0, 1, 1]
+  0      1    -1
+
+-We keep track of how many zero's, 1's and -1's we see in our array, and simply modify the bucket
+to reflect taht.
+-Once we know the unique count of elements in our array, we create an array or modify teh existing
+array, s.t. we have 3 zeros, 3 ones and 2 negative ones.
+-The first 3 indices will be replaced by 0's, the second 3 indeices will be replaced by 1's, and 
+the last 22 indices will be replaced by -1's.
+-Downside: we have to iterate through the array multiple time
+L>Naive approach
+Time: O(n)
+Space: O(1)
+
+-We could iterate through the array 4 to 2 times.
+-If we implement this algorithm s.t. we count the unique elements in a single iteration and replace
+all the values, we will have 2 iterations.
+-If we use count method for each unique value, we will have 3 separate iteration to find the count, and 1
+replace = 4 total iterations. 
+
+-Another strategy would be to create 3 partitions for the array (i.e. designate certain indices to 
+hold specific unique values) and shift the values around according to this partition.
+
+    First       Middle    Last
+  [  1, 0, 0 ,  -1, -1,   0, 1, 1 ]
+
+-First we try to move to the correct position the first elements, then the last elements
+-In the first pass, we want all the zeros shifted to the beginning of the array.
+-In the second pass, we want to position all of the negative 1's to go to the end of the array by
+shifting the element to the right.
+-And based on these two shifts, we will have 1's be in the middle.
+-Still not the most optimal solution as we are still making passes. 
+
+Third Solution
+---------------
+
+-Solves problem in one pass.
+-Uses the same strategy as solution 2 in that it keeps track of sub arrays or splitting the array into
+sub-arrays and then telling us where we should insert the next element, that is either the first, second,
+or third element in our ordering.
+-Unlike the second solution, we also keep track of the middle elements
+first = 0
+second = 0
+third = len(array) - 1
+
+-We're going to loop through the aray 1 time and we're going to check the value of the element that is
+at position second.
+L>We're going to use second as our iterable, and it will tell us when we should exit the loop.
+
+See threeNumberSort.jpg
+
+-We stop the algorithm when the s is further along than t, because array is finalized/sorted, guarenteed.
+
+-If we're in a situation where second or "s" is equal to zero, or the first element in our ordering, we 
+advance both the first pointer and the second pointer, but we do that after we swap the first pointer
+and second pointer values.
+-So we swap f and s and then we advance both of them forward by one.
+-If we're in a situation where we're equal to the second element in our ordering, or the middle element,
+then we simply advance the second pointer up by one, because while it's already in the correct position 
+and now we're picking the next place that we want the second or middle element to move into.
+-If we're in the final situation where this is the element that should be going to the end of the list, 
+then what we do is we swap s and t. We swap the second pointer and the third pointer, whatever the values
+are at that index, and we take the third pointer and move it back by one, locking in the fact that this
+element is at the correct position at the end of the array
+
+Time = O(n)

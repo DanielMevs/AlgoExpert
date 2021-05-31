@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Min Height BST
+--------------
+-Write a function that takes in a non-empty sorted array of distinct integers, constructs
+a BST from the integers, and returns the root of the BST.
+-The function should minimize the height of the BST 
+-It returns the root of that BST
+-Insert method is available 
+-Height = depth of deepest node (longest branch length)
+
+[1, 2, 5, 7, 10, 13, 14, 15, 22]
+
+-Minimizing the height of a binary tree means we need to make the tree as balanced as
+possible.
+-We need to minimize the length of both sides / brances s.t. one branch isn't bigger
+than another.
+-We want the number of nodes in the right subtree to be as equal to the number of nodes 
+in the left subtree as possible.
+-BST property for any node in a BST, that node's value must be strictly greater than its 
+left child and strictly less than or equal to its right child.
+-The sorted property of the array implies that the node in the middle has roughly the same
+amount of lesser values than greater values.
+-If we have a traditional for loop, iterate through the array and add values to the BST,
+it would create a tree with in-optimal height.

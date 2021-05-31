@@ -1,0 +1,71 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Min Max Stack Construction
+--------------------------
+-Write a MinMaxStack class for a Min Max stack. The class should support:
+.Pushing and popping values on and off the stack
+.Peeking at the value at the top of the stack
+.Getting both the minimum and the maximum values in the stack at any given point
+in time.
+
+-All class methods, when considered independently, should run in constant time 
+and with constant space.
+
+Sample Usage
+//All operations below are performed sequentially
+MinStack(): -//instantiate a MinMaxStack
+
+push(5)
+getMin(): 5
+getMax() : 5
+push(7)
+getMin() : 5
+getMax() : 7
+peek(): 7
+push(2)
+getMin(): 2
+getMax(): 7
+peek:2
+pop() : 2
+pop() : 7
+getMin() : 5
+getMax() : 5
+peek() : 5
+
+Ex of a stack: a pile of books on a table 
+-We have a table and we start piling books on the table.
+-We start with the purple book
+-Then we put the greeen book on the purple book
+-Then we're going to put a brown book above the green book.
+-And now we've got our pile of 3 books.
+-If we want to look at all the books and look at their covers we can peek at the
+one at the top, the brown book
+-If we want to peek at the cover of the green book or the purple book, we grab the
+brown book, move it off the pile, and now we can peek at the green book.
+-When we've got a pile of books on a table, the last book taht we put at the top of
+the pile is going to be the first one that we can look at and that we can pop off the pile.
+LIFO: last in, first out
+-The last book that was put on the table, or the 'last in' item, was teh brown book, and 
+it was the first one to be popped off the stack.
+
+Stack: a data structure that is going to follow the structure of the last in, first out.
+You're going to be able to pop items off the stack.
+-Similarly, we're going to be able to peek at items on the top of the stack following the 
+LIFO rule.
+-The stack is going to be the opposite of a queue.
+-Where a queue is going to be last in last out.
+L>The first item you put in the queue is going to be the first one to come out ratehr than
+in the stack where the first  item is the last one to come out.
+
+-What is a min-max stack?
+L>it's a stack where not only can we peek at and pop values off the stack, but we can 
+also access the minimum and maximum values in the stack at any given time.
+
+-The data structure we use to implement the stack is the array.
+
+-Whenever we push a value to the stack, we modify the value of the new min and max.

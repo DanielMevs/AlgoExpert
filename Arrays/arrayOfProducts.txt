@@ -1,0 +1,6 @@
+Array of Products
+-----------------
+
+Given an array of size n, this function returns an array where each element is a 
+product of all other elements in the array. Meaning if the input array [a,b,c] this 
+function returns an array where index 0 = array[b] * array[c], index 1 = array[a] * array[c], etc..

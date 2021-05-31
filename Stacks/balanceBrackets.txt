@@ -1,0 +1,68 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Balanced Brackets
+-----------------
+
+-Write a function that takes in a string made up of brackets '(, [, {, ), ], }' and other optional
+characters.
+-The function should return a boolean representing whether the string is balanced w/ regards to brackets.
+-A string is siad to be balanced if it has as many opening brackets of a certain type as it has closing 
+brackets of that type and if no brackets is unmatched. 
+-Note that an opening bracket can't match a corresponding closing bracket that comes before it, and 
+similarly, a closing bracket can't match a corresponding opening bracket that comes after it.
+-Also, brackets can't overlap each other as in [(])
+
+Sample Input
+-------------
+string = "([])(){}(())()()"
+
+Sample Output
+-------------
+true //it's balanced
+
+-The property of a stack that we want to use is last in first out.
+-Whatever the last value in the stack is the first value that will come out.
+-We want to keep track of every pair of matching brackets
+-For every opening bracket, we want to find its corresponding matching closing bracket.
+-Somehow, we have to eep track of all teh opening brackets
+-We need to keep track of the last opening bracket that we saw.
+(([]()()){}) -> string
+-We're going to build a stack.
+[       ]
+-We're going to iterate through our string of brackets.
+-At each character in the string, we check if our character is an opening bracket 
+-Only 3 types of opening brackets: "{}", "()", "[]"
+-First we check if our current bracket is an opening bracket.
+-If it is, we store it in the stack.
+[(,(,[
+-What we're going to do when we see that we have a closing bracket, regardless of the type,
+we first check that our stack isn't empty
+(because if our stack is empty, that means that we don't have any opening brackets).
+L>But if we do have brackets in our stack, we want to check what the last bracket was.
+-We want to maek sure that our last bracket corresponds to the type of the current bracket that 
+we're at. 
+
+-If our last bracket doesn't correspond to the type of our current bracket, then we're also
+ in a situation where our string is imbalanced.
+ -If we find ourselves in a scenario wehre the last value in our stack does not match the
+ type of our current closing bracket, then we're dealing w/ an imbalanced string.
+ -If the last value in the stack does match the type of our current bracket, then we're good.
+ L>we can pop the value of the opening bracket that matches our current closing bracket off
+ the stack.
+ -If our stack is not empty by the end of our string traversal, then our string is imbalanced.
+
+ Three Cases Where It is Not Balanced
+ -------------------------------------
+ 1) At the end of your string iteration, your stack is not empty.
+ 2)If you find a closing bracket but the stack is empty
+ 3) You're going through the string and you come across a closing bracket
+ and the final opening bracket in the stack does not match the type of your current closing
+ bracket.
+
+ Time: O(n) : n = len(string); you have to traverse the entire string
+ Space: (n) : n = len(string)

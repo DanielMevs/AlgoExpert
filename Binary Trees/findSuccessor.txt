@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Find Successor
+--------------
+-Write a function that takes in a Binary Tree (where nodes have an additional pointer
+to their parent node) as well a node contained in that tree and returns the given node's
+successor.
+-A node's successor is the node to be visited (immediately after the given node) when 
+traversing its tree using the in-order tree-traversal technique.
+-A node has no successor if it's the last node to be visited in the in-order traversal
+
+-One solution is storing the values in an array, looking for the node and returning the 
+node that comes right after.
+-Takes O(n) time
+-Takes O(n) space
+-Can we do better? 
+
+-Second, more optimal soltion.
+-All nodes have access to the parent attribute.
+*-A node's successor is going to be the left-most node in teh node's right sub-tree.
+
+-What if the input node does not have a right sub-tree?
+-We look at it's parent. If te input node is the right subtree of its parent, it cannot
+be the successor node.
+We then go up the tree until the input node is the left child of a parent.
+-If the input node has no children and it is the left subtree of its parent node, its parent 
+node is the successor.
+These two observations allow us to solve this problem in O(h) time 
+-It will be O(1) space.

@@ -1,0 +1,84 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+Merge Overlapping Intervals
+----------------------------
+Write a function that takes in a non-empty array of arbitrary intervals, merges any overlapping intervals,
+and returns the new intervals in no particular order.
+Each interval interval is an array of two integers, w/ interval[0] as the start of the interval and 
+interval[1] as the end of the interval.
+-Note that back-to-back intervals arent's considered to be overlapping. For example, [1, 5] and [6, 7] aren't
+overlapping; however, [1, 6] and [6, 7] aren't overlapping; however [1, 6] and [6, 7] are indeed overlapping.
+
+Sample Input
+intervals = [[1, 2], [3, 5], [4, 7], [6, 8], [9, 10]]
+
+Sample Output
+[[1, 2], [3, 8], [9, 10]]
+
+-The start of an interval is always less than the end of the interval.
+-Our function merges any overlapping intervals in our input and then
+returns a two dimensional array where the overlapping intervals have been merged.
+
+See mergeOverlapping.jpg
+
+-An interval represents all of the values between the starting value and the ending value.
+-In mergeOverlapping.jpg, we see there is overlap => we merge 3 to go all the way to 7.
+
+-For this problem, let us consider when two intervals overlap, even if they're only overlapping
+at a single point.
+
+See mergeOverlapping2.jpg
+
+In our example, if we take 
+[[1, 2], [3, 5], [4, 7], [6, 8], [9, 10]]
+                            ^
+                            |
+                       this inteval
+-It overlaps w/ [3, 5], [4, 7]
+
+* -Intervals overlap when the end of one interval is greater than or equal to the start of the next interval.
+
+-Step 1) sort input array
+sort([1, 2], [9, 10], [6, 8], [4, 7], [3, 5])
+
+-If we know the intervals are sorted by starting value then we know one range of numbers starts before the 
+next range of numbers.
+-If the input is sorted, then we can determine if two intervals overlap by comparig the end of the first
+interval to the start of the next interval.
+[1, 2][3, 4] -> no overlap
+[1, 2][2, 4] -> overlapping
+[3, 7][5, 9] -> overlapping
+[4, 7][9, 10] -> no overlapping
+
+-It might seem like a good idea to just traverse the input looking at adjacent intervals and when we find
+two that overlap, we merge them and then append it to our output.
+
+-Unfortunatley, this isn't going to work when we have multiple intervals that need to be merged into one
+single interval.
+
+-A better approach would be to append an interval to the output and keep reference to it, that way
+we can continue traversing the input looking at other intervals and if there's multiple intervals that
+overlap with it in a row, we can just reference it and change the ending value.
+
+[[1, 2], [3,4], [5,6], [6,7], [7, 8]]
+    |
+    V
+[  [1, 2]   ]
+
+-First we append our first interval to the output.
+-Then we'll begin our traversal from our next interval
+-We'll begin the traversal and we'll compare the current interval we're looking at in our 
+traversal to the interval we have a reference to in our output.
+-If there's no overlap, then we'll append the interval from our traversal and we'll update our reference
+and we continue our traversal...
+-If there is ever an overlap between the interval and our traversal in the interval, we have reference to it
+in our output, then we'll merge these intervals and it will be a simple merge because all we'll do is we'll
+update the ending value we have reference to in the output.
+-We're going to keep a reference to the last interval we've appended to our output.
+
+time: O(n(log(n)))
+space: O(n)

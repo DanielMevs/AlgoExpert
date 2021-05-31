@@ -1,0 +1,65 @@
+-----------------------------------------------------------------
+In a pre-order traversal, you visit first,traverse the left
+subtree, then traverse the right sub tree. 
+This order allows us to have an array in the order that
+we wish to insert values into our tree, read from left to right.
+Meaning each adjacent value of an element of the array 
+corresponds to either a right or a left subtree.
+-----------------------------------------------------------------
+
+NonOptimal Solution
+___________________
+The non-optimal solution is going to have a O(n^2) time complexity because 
+for each node (suppose we have n nodes) that the recursive
+call is being made, you have to loop through the array to
+find the right node index (which takes n time where n is 
+the length of the array);
+*note: there will be the same number of nodes created
+as the cardinality of the array.
+The first step in this solution is to find the right index
+use this as a bound to slice the array.
+The sub array to the left of this bound will be recursively
+passed to the left sub tree 
+The sub array to the right of this bound will be recursively
+pass to the right sub tree.
+Once it has reached it's full height, meaning the array has 
+been sliced to the point where the length is zero, we return
+null. Once the recursion has played out, it will return the 
+root node of the tree. 
+-------------------------------------------------------------
+
+Optimal Solution
+_________________
+For the optimal solution, rather than having to keep track
+of sub-arrays every time we make a recursive call, we're going
+to keep track of 3 pieces of information. The first is going to be 
+called the rootIdx. This variable is the index of the current 
+subtree value.
+Once we have created a node, to go to the left subtree
+and incriment the rootIdx by 1 to signify we are trying to
+add a node with the same value as the array at index rootIdx.
+The next variables that we are going to create are called the 
+lowerBound and the upperBound. The node that we're trying to create
+cannot have a value that exceeds the bounds of these variables.
+Specifically, the upper bound is going to be a value that the current node
+cannot be greater than or equal to. The lower bound will be the value
+that the current node cannot be less than. 
+If the rootIdx is equal to the length of the array, we're done and we can 
+return the root node.
+If not, then we need to check that the node we're trying to create is within the lower 
+and upper bound range.
+If it is we can recursively call the left subtree node and the right subree node. 
+To create the left subtree node, we're going to have to make a call.
+If we go to the left, and the condition passes, the upper bound will be changed to the
+value of the parent node while the lower bound remains the same.
+The inverse is true for the right subtree.
+Through these operations, we eliminate the need for slicing/creating subarrays.
+Once the rootIdx is equal to the size of the array, we know we've hit every value
+and we can return the root node.
+This algorithm takes O(n) time, where n is the number of nodes in our tree.
+However, there are going to be more than n calls for nodes that are missing children.
+If k is the number of recursive calls that don't have a node being added to the tree, 
+the time would technically be O(n+k). If k = n, then you would have 
+O(2n). But since 2 is a constant, it is negligible as n approaches infinity which 
+boils down to O(n).
+--------------------------------------------------------------------------------------

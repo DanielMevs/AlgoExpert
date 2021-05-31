@@ -1,0 +1,16 @@
+Next Greater Element
+--------------------
+
+Write a function that takes in an array of integers and returns a new array containing, at each index, the next element in the input array that's greater than the element at the index in the input array. Additionally, your function should treat the input array as a circular array. A circular array wraps around itself as if it were connected end-to-end. So the next index after the last index in a circular array is the first index. SampleInput: #array = [2, 5, -3, -4, 6, 7, 2] Sample Output: #[5, 6, 6, 6, 7, -1, 5]
+
+#BRUTE FORCE APPROACH
+
+Just look at every single element and simply loop through the result of the array and look for the first element we see that is greater than this element.
+
+Complexity Analysis Time: O(n^2) --> for every element we have to potentially loop through every other element in the array to figure out the next greater element e.g. [1, 1, 1, 1, 1] Space: uses no extra space, other than the output array
+
+#OPTIMAL SOLUTION
+
+O(N) time, O(N) space : N=len(input_array). Whenever you have a problem where you're looking for the maximum or the minimum, or the next element that's greater than some element (or a lot of typical array problems really), you're able to actually solve these in linear time, using linear space. We will use some external space (a stack) Stack --> LIFO, FILO -> like a stack of plates We can use an array to implement a stack in our program Removing and adding elements to the stack is a constant-time operation (O(1)) We're going to loop through the array, and at each step of our iteration, we're going to compare the value of the current element that we're on to the value of the element on the top of the stack.
+
+We need to loop through this array twice because an element's next greatest element might be located later on in the array. We will use the modulus operator to help avoid index out of bound errors and effectively wrap around the array (e.g. j % len(array))

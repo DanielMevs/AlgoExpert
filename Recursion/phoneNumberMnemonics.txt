@@ -1,0 +1,46 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 15:00:24 2021
+
+@author: daniel
+"""
+
+We need to figure out how all of the characters or all of the digits in our phone # map to
+their corresponding characters.
+We need a data structure (dictionary) to map this
+Ex:
+{"1": ["1"],
+	"2": ["a", "b", "c"],
+	...
+
+}
+
+We will have a recursive solution.
+"1 9 0 5"
+ 0 1 2 3
+
+pickChar(idx)  //will pick the idx to represent the index in the original phone #.
+
+-The base case for our recursion is that the idx is greater than the length of the
+string => append the mneumonic
+
+					pickChar(0)->"1"
+					/
+				pickChar(1)->"w"
+				/
+			pickChar(2)->"o"
+			/
+		pickChar(3)->"j"
+	    /  7
+	  L   /
+  Base Case (append current
+  				to mnemonics)
+
+At every recursive call, we are going through all of the possible options for the current
+digit, and then recursively generating all of the digits after that. 
+
+Time Complexity: O((4^n)*n)
+L> 4 because worst case you have all nines and there are 4 characters that represent 9,
+most of any number.
+(exponent) n is how many recursive calls we can ahve (at most)
+-multiplied by n is the operation we do everytime we hit the base case.      

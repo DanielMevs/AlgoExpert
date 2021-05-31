@@ -1,0 +1,115 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Min Heap Construction
+----------------------
+-Implement a MinHeap class that supports:
+*Building a Min Heap from an input array of integers.
+*Inserting integers in the heap.
+*Removing the heap's minimum / root value.
+*Peeking at the heap's minimum / root value.
+*Sifting integer up and down the heap, which is to be used 
+ when inserting and removing values
+
+-Note that the heap should be represented in teh form of a array.
+-A heap/binary heap is a cool data structure that resembles a binary
+tree, in fact IT IS a binary tree, but it's a special type of binary
+tree, that satifies 2 addition properties:
+ *Completeness -> the heap has to have all it's levels filled up completely,
+  excepet the last level, which if it is partly filled up has to be filled up
+  from the left to the right
+
+  See minHeapConstruction1.jpg
+
+  -The heap property -> where we can distinguish between a min heap and a max
+  heap. Every node in the heap is going to have a value smaller than or equal to 
+  it's children's node's value (for a min heap, inverse for max).
+
+  -A heap is in no way sorted
+  -The root node, is at all time, the smallest value in the heap(for min heap).
+  -You can express heaps in the form of conventional arrays/lists
+  -Some neat properties you can use to find the children nodes of a specific node,
+  or the parent node of a specific node, by using indices of an array to calculate that.
+
+See minHeapConstruction2.jpg
+
+-To find the children node of a particular node, you take the index i of your current node
+and multiply i by 2 and add 1. To get the second child node, you multiply i by 2 and add 2.
+
+currentNode -> i
+childOne -> 2i + 1
+childTwo -> 2i + 2
+parentNOde -> roundDown/floor((i - 1) / 2)
+
+4 methods
+-Build Heap: take an array and builds a heap
+-Sift Down
+-Sift Up
+-Insert
+-Remove
+
+See minHeapConstruction3.jpg
+
+Insert
+-------
+Let's start w/ insert
+-Let's say we want to insert 9. We place it to the left of 31. It no longer satisfies the 
+heap property that every node's child must be greater that or equal to the current node(31 > 9)
+L>After we add it to the end of the heap, we want to sift that node up to its correct position.
+
+-This is where siftUp method comes into play (famous functionality of a heap).
+L>Going to continuously swap the current node that we just inserted w/ its present nodes until it's in 
+its correct position.
+-In an array, to insert 9, you look at it's parent index, make a comparison to see if it is greater
+that it's parent idex element.
+L>If not, then swap values.
+-We keep repeating this process until the inserted node is in place.
+
+-For remove, you're going to be removing the root value, which is the smallest value in a min heap.
+We use a heap if we want to keep track of the smallest or largest values.
+-How it works is that you swap the root node with the last leaf node and you just pop the node off 
+(effectively removing it).
+
+-Once we have swapped the head and tail, we swap the new root node w/ the smallest value of its 
+children nodes, as it is likely out of order at this point.
+
+See minHeapConstruction4.jpg
+
+Build Heap
+----------
+-Build heap is a method to build a heap from an array (could be unsorted)
+-Once you've got the array represented in the form of a tree, you're going to sift down on every parent
+node in the heap.
+-So by calling the siftDown method on every parent node, you're effectively positioning every parent
+node correctly in the heap, and you start at the very last parent node
+- [30, 102, 23, 17, 18, 9, 44, 12, 31]
+L>Let's say we're given this array.
+L>We call siftDown on all the parent nodes, starting at the last parent node, in this case 17, comparison,
+swap
+[30, 102, 23, 12, 18, 9, 44, 17, 31]
+
+Space: O(1) ; we do not allocate extra memory
+-Alternatively, we can start at the root node level and sift up.
+-Sift Down and sift-Up have a time complexity of O(logn)
+
+-Insertion and removal are also going to have a O(logn) time complexity because they primarily rely on
+siftUp and siftDown methods.
+
+Sift Down
+----------
+Build-heap will run in O(n) time. Not O(nlogn)
+-The higher up in the tree you are, the longer siftDown takes to run
+-If you are at n-1 level, you run in O(1). Not so much as you go up the tree.
+L>The majority of the nodes that you can sift down on are going to be at the bottom
+of the tree, which doesn't take much time.
+-When sift down genuinely takees O(logn) time is when you are at the top of the heap (root node)
+-You can represent the run time of the Build Heap method in a sort of Taylor series that converges
+to O(N).
+
+~=> If you use the alternative implementation of starting at the root node and siftingDown, you
+no longer have a O(n)  time complexity. If you start at root O(O), level 2 O(1), then as you
+get to the bottom of the tree where all the leaf nodes are, you'll start getting to O(nlogn) time

@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Remove Kth Node From End
+-------------------------
+
+-Write a function that takes in the head of a Singly Linked list and an inter K and removes
+the Kth node from the end of the list.
+-The removal should be done in place, meaning that the original data structure should be 
+mutated (no new structure should be created).
+-Furthermore, the input head of the linked list should remain the head of the linked list
+after the removal is done, even if the head is the node that's supposed to be removed.
+-In other words, if the head is the node that's supposed to be removed, your function should
+simply mutate its value and next pointer.
+-Note that your function doesn't need to return anything.
+-You can assume that the input Linked List will always have at least two nodes and, more 
+specifically, at least K nodes.
+-Each LinkedList node has an integer value as well as a next node pointing to the next node
+in the list or to None/null if it's the tail of the list.
+
+-We're going to traverse this singly-linked list with two pointers
+-One pointer iterates through n nodes.
+L>Once this pointer reaches element at index k, the other pointer starts iterating along 
+until the first pointer reaches None/null. Now we remove the element at the index of the second
+pointer.
+-The second pointer is always k nodes behind the first pointer
+-We want to keep track of the node right before the node of the second pointer so we can
+reassign its next to be the element at the second pointer's next.
+
+See remove kth node from end
+
+Time = O(n)
+Space = O(1) we're just storing pointers and counters

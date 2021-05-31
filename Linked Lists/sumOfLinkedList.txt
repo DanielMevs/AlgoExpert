@@ -1,0 +1,98 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Sum of Linked Lists
+-------------------
+-You're given two linked lists of potentially unequal length.
+-Each linked list represents a non-negative integer, where each node in the Linked
+List is a digit of that integer, and the first node in each Linked List always 
+represents the least significnt digit of the integer.
+*-Write a function taht returns the head of a new Linked List that represents the sum
+of the integers represented by the two input Linked Lists.
+-Each Linked List node has an integer value as well as a next node pointing to the next
+node in the list or to None/null if it's the tail of the list.
+-The value of each LinkedList node is always in the range of 0-9.
+Note: your function must create and return a new Linked List, and you're not allowed 
+to modify either of the input Linked Lists.
+
+Sampe Input
+-----------
+linkedListOne = 2 -> 4 -> 7 -> 1
+linkedListTwo = 9 -> 4 -> 5
+
+Sample Output
+-------------
+1->9->2->
+//Linked list one represent 1742
+//linkedListTwo represents 549
+//1742 + 549 = 2291 (create linked List w/ these digits)
+//The above took O(m + n) time where n = len(linkedListOne), m=len(second)
+-Time is due to iterating through 2 linked lists.
+-Space: O(n + m); need to keep track of the digits for each linked list. 
+
+There is a much better way to do this, however.
+-We don't have to know the entire number for both of the linked lists.
+-When you carry a number in addition, that number is carried over.
+-You can do the same w/ the 2 linked lists.
+
+-We iterate through both linked-lists at the same time and you add the values from
+the pair and carry over any tenth-decimal digit.
+
+-We need a dummy variable to keep track of what the head of our new linked-list is.
+
+dummy = Node(0)
+currentNode = last node we created in our new linked list.
+currentNode = dummy
+-The reason we need these variables is because we need to keep track of the nodes
+that we've added in our new linked list.
+-When we iterate through both linked lists, we have two pointers keeping track of 
+each
+-We set these pointers to next to traverse until not None
+-When we sum 2 numbers, we mod by ten to get the remainder of the sum after it is 
+divided by 10 to get the value pass to the next digit
+value = (9 + 2) % 10
+         ^   ^
+         |   |
+        p1   p2
+
+dummy
+   0 -> [ 1-> 9 -> 2 -> 2 //return dummy + 1
+
+value = (2 + 9) % 10 = 1
+carry = (2+9) // 10 = 1
+
+value = (4 + 4) % 10 = 8 + carry = 9
+"   " = 8 // 10 = 0
+currentNode = 9
+carry = 0
+
+value = (7 + 5) % 10 = 2
+carry = ( 7 + 5 ) // 10 = 1
+carry = 1
+-Create new linked list node 2
+-currentNode = 2 
+
+LL1 -> 2 -> 4 -> 7 -> 1
+LL2 -> 9 -> 4 -> 5
+
+If we have no more nodes but carry > 0, we still have to add the carry =>
+while(LL1 != None OR LL2 != None OR carry > 0)
+	continue algorithm
+
+-If there is one list that's longer than the other one, you substitute none values 
+w/ zeros.
+
+value = (1 + 0) + 1 % 10 = 2 % 10 = 2
+carry = 2 // 10 = 0
+carry = 0
+create new linked list node 2
+-currentNode = 2
+
+-We don't have any more nodes in linked list one, no nodes in linked list two, 
+carry is zero
+=> We're done w/ our algorithm. We want to return our created linked-list one node from the 
+dummy node on. 

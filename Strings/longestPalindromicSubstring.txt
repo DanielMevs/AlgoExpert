@@ -1,0 +1,68 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Longest Palindromic Substring
+-----------------------------
+-Write a function that, given a string, returns its longest palindromic substring.
+-A palindrome is defined as a string that's written the same forward and backward.
+-Note that single-character strings are palindromes.
+-You can assume that there will only be one longest palindromic substring.
+
+Sample Input
+string = "abaxyzzyxf"
+
+Solution 1
+L>Get all the substrings possible of input string and then, for each one, check if
+its a palindrome and then store the palindromes (or current longest palindrome) and 
+replace it whenever you find a longer palindrome.
+-Works but blows up your space/time complexity.
+-Time = (O(n^3)) -> to generate all the substrings, you have to do a double for loop.
+-You'd have to loop through the string once, and at each time you're looping through it,
+loop another time to generate substrings.
+-For each substring, you would run an "isPalindrome" function, that checks the 
+palindromicity ofa string.
+L>This is an O(n) time operation.
+=>Total rune time: O(n^3)
+
+We can make this better
+Palindrome: a string written the same forwards as backwards (kind of like a mirror,
+in the middle it mirrors itself).
+-In this solution, we're not checking every substring.
+-We're just checking every center of a potential palindrome (because a palindrome
+has to center somewhere).
+-We check from all those centers and expand from them.
+-That will end up running in O(n^2) time.
+
+-abaxyzzyxf
+
+-We start at a. We look to the left and to the right to see if it's a palindrome. To
+the left is Null/none so we consider 'a' a palindrome 
+-We go to b. We check to the left and to the right.
+-They are equal to each otehr so we have a valide palindrome. We update our longest
+palindrome to 'aba.' 
+We expand and we stop because none is to the left.
+-If we have an even length palindrome, then the center can be between two numbers.
+-We move on to a. We look to the left and to the right. 'bax' is not a palindrome.
+-We move on to 'x'. We look to the left and right.
+'axy' is not a palindrome, as a != y. Then we check a|x. Not a palindrome either.
+-We move on to y. Look to the left and right.'xyz' is not a palindrome.
+-We look at x|y. That is not a palindrome.
+-We move one to 'z'. We look to the left and to the right. 'yzz' is not a palindrome.
+We look at 'y|z'. Not a palindrome.
+-We move on to the next z. We look to the left and right. 'zzy' is not a palindrome.
+-We look at z|z. It is a palindrome, so we expand left and right.
+-We see 'yz|zy' and we see it is a valid palindrome.
+-We check to see if this palindrome has a greater length than our current longest 
+palindrome and it turns out it is. => we make 'yz|zy' our longest palindrome.
+-We expand to the left and right. We have 'xyzzyx'. It is a palindrome > current longest
+palindrome => we make 'xyzzyx' our new longest palindrome.
+-We run through the algorithm and ifnd 'xyzzyx' as the best contender.
+-Runs in O(n^2) time.
+L>Each expansion takes O(n) time and you're doing it at each point in our string.
+space = O(1). We don't actually store the current longest palindrome. 
+-We simply store 2 indices, the start of the palindrome and the end.
+L>At the end we can build a string w/ those values.

@@ -1,0 +1,84 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Generate Document
+------------------
+
+-Given 2 inputs, a string called characters and a string called document
+characters = "BSte!hets: ogEAxpelrtx"
+document = "AlgoExpert is the Best!"
+-Looks at all the characters in the character string and determines whether all the 
+characters in the character string and determines whether all the characters all 
+there to form the string in document.
+-Spaces count
+-String could contain any alphanumeric symbol.
+
+*can't assume strings are the same length
+
+InOptimal Solution
+------------------
+Loop through the array and count how many times a character occurs in the array.
+-And then loop through the other array and count how many times it has that 
+character.
+-The count of characters in the character list must be greater than or equal to
+the number of characters in the document list.
+Pitfall: it does not know that a character has already been seen. It will repeat
+the work redundantly.
+
+Time Complexity: O(M (N + M)): m = len(document); N=len(characters)
+n + m = the amount of time it takes to loop through every single character in the 
+document plus every single character in the character list.
+
+-However it is a constant space operation:
+L>O(1) space
+-Very ineffiecient algorithm as you are repeating a lot of work.
+-We don't want to count the same character multiple times if we've already counted
+it once. 
+
+Solution 2
+-----------
+We'll initialize a counted set and if we ever run into a character in this set, we'll
+skip over it.
+L>No need to count it again because we've already counted it.
+-Improves time complexity but adds a space complexity.
+counted = {}
+Time complexity: O(c(n + m))
+-We have not removed the step where we need to count the occurances of a character in 
+both the document and characters list, but we only need to do it c times.
+c = # of unique characters in our document.
+L> c will always be less than m.
+
+Most Optimal Way
+----------------
+-Hash table/ hash map
+L>Why are we looping through the documents and the characters multiple times?
+Why don't we just loop through them 1 time?
+-As we loop through, count every single character
+L>Loop through it once, store the count of all of the characters and then see
+if we have enough of those characters to create that document.
+
+Let's say we start iterating through the characters list first.
+-If the character appears in our hash-map/dictionary, we increment the count.
+-If the character is not in our hash-map/ dictionary, we add and assign the count
+to 1.
+-Then as we loop through the documents string, we decrement the count by 1 for every
+occurance of that character.
+-If we run into a character and the count is less than 1, return false
+
+Complexity Analysis
+--------------------
+For the optimal solution,
+time: O(n + m)
+space: O(c)
+c = # of unique characters in our characters string
+L>because that's what we're counting
+L>If you start in the reverse order by counting the document
+string that c = unique characters in document string.
+
+-In a coding interview, you want to list the in-optimal solutions first, 
+and then say that you're not going to use them because something more optimal
+exists. 

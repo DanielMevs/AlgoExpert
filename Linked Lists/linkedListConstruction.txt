@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Linked List Construction
+-------------------------
+-Write a DoublyLinkedList class that has a head and a tail, both of which point to either
+a linked list Node or None/null. The class should support:
+*Setting the head and tail of the linked list
+*Inserting nodes before and after other nodes as well as at given positions (the positon
+of the head node is 1).
+*Removing given nodes and removing nodes w/ given values.
+*Searching for nodes w/ given value 
+
+-Note taht setHead, setTail, insertBefore, insertAfter, insertAtPosition, and remove methods
+all take in actual Nodes as input parameters - not integers (except for insertAtPosition)
+-The input nodes can be either stand-alone nodes or nodes that are already in the linked list.
+-If they're nodes that are already in teh linked list, the methods will effectively be moving the
+nodes within the linked-list.
+-You won't be told if the input nodes already in the linked list, so your code will have to 
+defensively handle this scenario.
+
+If you're doing this problem in an untyped language like Python, you may want to look at the 
+various function signatures in a typed language like Java or Typescript to get a better idea
+of what each input parameter is.
+
+-Each Node has an integer value as well as a prev node and a next node, both of which can 
+point to either another node or None/null.
+
+-A linked list is a data structure that consists of nodes
+
+See linkedListConstruction1.jpg
+
+-You'll only have direct access to the head or tail of a linked list so wwhen you construct
+a linked list, you have to initialize the head and tail.
+-You can choose an existing node and move it to be the tail or head, or if you have a new node
+that points to nothing, then you can make it the new head or tail.
+-If you want to see if the linked list contains a node w/ a specified value, you need to start
+either at the head or tail, and traverse the linked list and do the check.
+L>We'll use a while loop, so long as the node that we're at is not the null value and current 
+node != target, set
+
+-How do you remove a node?
+L>When designing your operations, take in mind to preserve the properties of your linked list.
+-When you remove a node, you cannot simply say node.next = null or node.prev = null because the 
+adjacent nodes don't know where to point to.
+-First check that the previous node is not pointing to null. 
+-If it is not, we take its next pointer and set it to whatever your current node is pointing
+at (node.prev.next = node.next)
+-Do the same w/ node.next (node.next.prev = node.prev)
+Now, you can do node.next = null, node.prev = null
+
+See linkedListConstruction2.jpg  
+
+InsertBefore
+------------
+If the value you're trying to insert is the head or tail, do nothing
+-If you want to insert a node already in the linked list before some other node, we first 
+remove it from our list, have the prev and next nodes pointing at the proper place, then
+make the node that we just removed/popped have a prev equal to its previous' node previous 
+node.
+Same w/ next
+-If the node we want to insert Before is the head, we make our node the new head.
+-Then grab the previous node's previous next, and set it equal to our removed node.
+-Then the previous node prev is equal to our newly inserted node.
+
+-The insertAfter is the same but we will be dealing w/ the tail and we will use the reverse
+operations.
+-For setHead, we take the head and use insertBefore on it to set the specified value as the 
+new head.
+-For setTail, we do the same thing w/ insertAfter.
+
+-For insertAtPosition, we will be using all of our methods.
+L>if position is 1, we make that node the new head.
+L>If not, we keep traversing until we find the pos.
+L>We check if it is at the end of the linked list
+
+Complexity Analysis
+--------------------
+
+-The searching method is going to run in O(n) time and O(1) space.
+
+-The searching method is going to run in O(n) time and O(1) space.
+-Removal methods -> O(1) time, O(1) space
+-Remove all nodes in LL w/ value v -> O(n) time, O(1) space.
+-InsertAfter, setHead, setTail -> O(1) time, O(1) space
+-Insert node at postion P -> O(P) time, O(1) space

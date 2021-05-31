@@ -1,0 +1,60 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 17:30 2021
+
+@author: daniel
+"""
+
+Youngest Common Ancestor
+------------------------
+
+You're given 3 inputs, all of which are instances of an AncestralTree class that have an ancestor
+property pointing ot their youngest ancestor.
+-The first input is the top ancestor in an ancestral tree (i.e., the only instance that has no 
+ancestor -- its ancestor property points to None/null), and the other two inputs are 
+descendants in the ancestral tree
+-Write a function that returns the youngest common ancestor to the two descendants.
+-Note that a descendant is considered its own ancestor
+-So in the simple ancestral tree shown on ancestralTree.jpeg, te youngest common ancestor
+to nodes A and B is node A
+
+See ancestralTree.jpeg
+
+Sample Input
+top_ancestor = node A
+descendantOne = node E
+descendantTwo = node I
+            A
+           / \
+          B   C
+         / \ / \
+        D  E F  G
+       / \
+      H  I
+
+Sample Output
+node B
+
+We're dealing w/ a graph/tree problem
+-We're going to have to iterate up the tree starting at our descendants
+-If our descendants are different levels in the tree, we're not going to overlap.
+-If the descendants are at different levels, we have to get them on the same level.
+
+See ancestralTree2.jpeg
+
+Here we want to bring T at the same level as I
+-First we find the depth of I from the root
+L>We traverse up 2 times. So we say I has a depth of 2.
+
+-For the T, we're going to go up to the P, H, B, A.
+So that is going to be a depth of 4
+
+-So now we know the T descendant is deeper in the tree than the I descendant.
+L>So we know that we need to bring the T upwards at the same level as I.
+-We know how many levels to bring the T upwards by subtracting the depth of T by the
+depth of I
+4-2=2
+-So we bubble the T up to level 2.
+
+-Once the two descendants are at the same level, we're going to keep going upwards
+until we're at the same spot(youngest common ancestor).
